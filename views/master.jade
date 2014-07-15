@@ -3,26 +3,20 @@
 
 extends layout
 block content
-    h1=title
-    h3#state.well.pre-scrollable Disconnected
+    h1= title
+
+    h3#state.well Disconnected
+    .col-lg-2.well
+        ul#slavesList
+    .col-lg-5.center-block
+        video.well(id='video' width='640' height='480' autoplay)
     #controlPanel.col-lg-3.well
-        .row
-            input#connect(type='button' value='Connect' disabled='true')
-        .row
-            input#login(type='text' placeholder='Представьтесь' disabled='true' value='anonymous')
-            input#send(type='button' value='Apply' disabled='true')
         .row
             input#width(type='number' placeholder='Ширина видео' max='2048' min='64' value='640' disabled='true')
             input#height(type='number' placeholder='Высота видео' max='2048' min='64' value='480' disabled='true')
             input#apply(type='button' value='Apply' disabled='true')
-        .row
-            input#callBtn(type='button' disabled='true' value='Call')
-
-    .col-lg-5.center-block
-        video.well(id='video' width='640' height='480' autoplay)
 
     script(type='text/javascript' src='vendor/bower_components/peerjs/peer.js')
     script(type='text/javascript' src='vendor/bower_components/jquery/dist/jquery.js')
     script(type='text/javascript' src='javascripts/Media.js')
-
-    script(type='text/javascript' src='javascripts/RTCSlave.js')
+    script(type='text/javascript' src='javascripts/RTCMaster.js')

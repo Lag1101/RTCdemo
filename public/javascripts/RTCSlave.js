@@ -5,60 +5,95 @@
 
 
 (function(){
+    var statusBar = $('#state');
 
-    var media = new Media(
+    Media(
         function(mediaStream) {
+            var applyButton = $('#apply');
+            var widthInput = $('#width');
+            var heightInput = $('#height');
+            var video = $('#video');
 
-            var masterId = '0';
+            applyButton.attr('disabled', false);
+            widthInput.attr('disabled', false);
+            heightInput.attr('disabled', false);
 
-            var callButton = document.getElementById('callBtn');
+            applyButton.onclick = function() {
+                try{
+                    video.attr('width', widthInput.val());
+                    video.attr('height', heightInput.val());
+                } catch ( e ) {
+                    console.error(e.message);
+                }
+            };
 
-            var peer = new Peer({host: 'localhost', port: 3002, path: '/server'});
+            var connButton = $('#connect');
+            connButton.attr('disabled', false);
+            connectToServer();
+            function connectToServer() {
+                connButton.click(null);
+                var peer = new Peer({host: 'localhost', port: 3002, path: '/server'});
+                statusBar.text("Connecting to server...");
+                peer
+                    .on('open', function (id) {
+                        connButton.click(connectToServer);
+                        statusBar.text("Connected to server. Your id's " + id);
 
-            function onClickCall() {
-                var call = peer.call(masterId, mediaStream);
+                        var callButton = $('#callBtn');
+                        var sendButton = $('#send');
+                        var loginEl = $('#login');
 
-                call.on('stream', function(stream) {
-                    // `stream` is the MediaStream of the remote peer.
-                    // Here you'd add it to an HTML video/canvas element.
-                    console.log('call done');
+                        var masterId = '0';
+                        var conn = peer.connect(masterId);
+                        statusBar.text("Connecting to Master...");
+                        conn
+                            .on('open', function () {
+                                statusBar.text("Connected to Master");
 
-                    var video = document.getElementById('video');
-                    video.src = URL.createObjectURL(stream);
-                    video.muted = true;
-                });
-            }
+                                callButton.attr('disabled', false);
+                                loginEl.attr('disabled', false);
+                                sendButton.attr('disabled', false);
+                                callButton.click( function () {
+                                    var call = peer.call(masterId, mediaStream);
 
-            callButton.onclick = onClickCall;
+                                    statusBar.text("Calling to Master...");
+                                    call.on('stream', function (stream) {
+                                        statusBar.text("Call established");
+                                        // `stream` is the MediaStream of the remote peer.
+                                        // Here you'd add it to an HTML video/canvas element.
+                                        console.log('call done');
 
-            peer
-                .on('open', function(id) {
-                    console.log('My peer ID is: ' + id);
-                    var conn = peer.connect(masterId);
-
-                    conn.on('open', function() {
-                        console.log(" connected");
-                        callButton.disabled = false;
-                        // Receive messages
+                                        video.attr('src', URL.createObjectURL(stream));
+                                        video.attr('muted', true);
+                                    });
+                                });
+                                sendButton.onclick = function() {
+                                    conn.send(loginEl.value);
+                                }
+                            })
+                            .on('close', function () {
+                                statusBar.text("Disconnected from Master");
+                                callButton.attr('disabled', true);
+                                loginEl.attr('disabled', true);
+                                sendButton.attr('disabled', true);
+                            });
+                    })
+                    .on('close', function () {
+                        statusBar.text("Disconnected from server");
+                    })
+                    .on('connection', function (conn) {
+                        console.log(conn.peer);
+                        conn.on('open', function () {});
+                    })
+                    .on('error', function (err) {
+                        console.error(err);
+                        statusBar.text("Cannot connect");
                     });
-
-                })
-                .on('close', function() {
-                    console.log('closed');
-                    callButton.disabled = true;
-                })
-                .on('connection', function(conn) {
-                    console.log(conn.peer);
-                    conn.on('open', function() {});
-                })
-                .on('error', function(err) {
-                    console.error(err);
-                });
+            }
         },
         function(err) {
             console.error(err);
         }
     );
-
 })();
 
