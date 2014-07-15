@@ -42,12 +42,13 @@
                 }
 
                 function addSlave(id) {
+                    slavesList.append( '<li id="' + id + '"></li>' );
                     slaves[id] = {
                         name: "",
-                        stream: null
+                        stream: null,
+                        el: $('#'+id)
                     };
-                    slavesList.append( '<li id="' + id + '"></li>' );
-                    var li = $('#'+id);
+                    var li = slaves[id].el;
                     li.text(id);
                     li.click(function(){
                         onClickSlave(id);
@@ -56,15 +57,15 @@
 
                 function addStreamToSlave(id, stream) {
                     slaves[id].stream = stream;
-                    $('#'+id).addClass('alert alert-success');
+                    slaves[id].el.addClass('alert alert-success');
                 }
                 function addNameToSlave(id, name) {
                     slaves[id].name = name;
-                    $('#'+id).text(name);
+                    slaves[id].el.text(name);
                 }
 
                 function removeSlave(id) {
-                    $('#'+id).remove();
+                    slaves[id].el.remove();
                     delete slaves[id];
                 }
 
