@@ -1,0 +1,27 @@
+//
+   Created by vasiliy.lomanov on 14.07.2014.
+
+extends layout
+block content
+    h1= title
+
+    if isSlave
+        div(class='sidebar_left')
+            input(type='button' id='callBtn' disabled='true' value='call')
+
+    div(class='content_right')
+        input(type='number' id='width' value='640')
+        input(type='number' id='height' value='480')
+        input(type='button' id='apply' value='Apply')
+        video(id='video' autoplay)
+
+    if !isSlave
+        ul(id='idsList')
+
+    script(type='text/javascript' src='vendor/bower_components/peerjs/peer.js')
+    script(type='text/javascript' src='javascripts/Media.js')
+
+    if isSlave
+        script(type='text/javascript' src='javascripts/RTCSlave.js')
+    else
+        script(type='text/javascript' src='javascripts/RTCMaster.js')

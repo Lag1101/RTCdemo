@@ -1,0 +1,9 @@
+{
+    "name": "WebRTCdemo",
+    "version": "0.0.1",
+    "dependencies": {
+        "peerjs": "*",
+        "bootstrap": "*"
+    },
+    "private": true
+}

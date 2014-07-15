@@ -1,0 +1,22 @@
+//
+   Created by vasiliy.lomanov on 14.07.2014.
+
+extends layout
+block content
+    h1= title
+    .col-lg-3.well
+        .row
+            input(type='text' id='login' value='Представьтесь')
+            input(type='number' id='width' value='640')
+            input(type='number' id='height' value='480')
+            input(type='button' id='apply' value='Apply')
+        .row
+            input(type='button' id='callBtn' disabled='true' value='call')
+
+    .col-lg-6.well.center-block
+        video(id='video' autoplay)
+
+    script(type='text/javascript' src='vendor/bower_components/peerjs/peer.js')
+    script(type='text/javascript' src='javascripts/Media.js')
+
+    script(type='text/javascript' src='javascripts/RTCSlave.js')

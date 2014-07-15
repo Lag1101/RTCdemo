@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+var debug = require('debug')('WebRTCdemo');
+var app = require('../app');
+
+var peer = require('peer');
+
+app.set('port', process.env.PORT || 3000);
+
+var peerServer = new peer.PeerServer({port: 3002, path: '/server'});
+
+var connections = [];
+
+peerServer.on("some data", function(data) {
+    console.log(data);
+});
+
+peerServer.on('connection', function(id) {
+    console.log(id + ' connected');
+
+    connections.push(id);
+
+    console.log(connections);
+});
+peerServer.on('disconnect', function(id) {
+    console.log(id + ' disconnected');
+
+    var index = connections.indexOf(id);
+    connections.splice(index, 1);
+
+    console.log(connections);
+});
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
