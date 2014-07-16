@@ -18,14 +18,14 @@
             widthInput.attr('disabled', false);
             heightInput.attr('disabled', false);
 
-            applyButton.onclick = function() {
+            applyButton.click( function() {
                 try{
                     video.attr('width', widthInput.val());
                     video.attr('height', heightInput.val());
                 } catch ( e ) {
                     console.error(e.message);
                 }
-            };
+            });
 
             var connButton = $('#connect');
             connButton.attr('disabled', false);
@@ -65,9 +65,9 @@
                                         video.attr('muted', true);
                                     });
                                 });
-                                sendButton.onclick = function() {
-                                    conn.send(loginEl.value);
-                                }
+                                sendButton.click( function() {
+                                    conn.send(loginEl.val());
+                                });
                             })
                             .on('close', function () {
                                 statusBar.text("Disconnected from Master");

@@ -6,6 +6,8 @@
 (function(){
     var statusBar = $('#state');
 
+
+
     Media(
         function(mediaStream) {
 
@@ -18,14 +20,14 @@
             widthInput.attr('disabled', false);
             heightInput.attr('disabled', false);
 
-            applyButton.onclick = function() {
+            applyButton.click( function() {
                 try{
                     video.attr('width', widthInput.val());
                     video.attr('height', heightInput.val());
                 } catch ( e ) {
                     console.error(e.message);
                 }
-            };
+            });
 
             connectToServer();
             function connectToServer() {
