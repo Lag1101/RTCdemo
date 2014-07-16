@@ -39,7 +39,7 @@
                         connButton.click(connectToServer);
                         statusBar.text("Connected to server. Your id's " + id);
 
-                        var callButton = $('#callBtn');
+                        var callButton = $('#call');
                         var sendButton = $('#send');
                         var loginEl = $('#login');
 
@@ -59,8 +59,6 @@
                                     statusBar.text("Calling to Master...");
                                     call.on('stream', function (stream) {
                                         statusBar.text("Call established");
-                                        // `stream` is the MediaStream of the remote peer.
-                                        // Here you'd add it to an HTML video/canvas element.
                                         console.log('call done');
 
                                         video.attr('src', URL.createObjectURL(stream));

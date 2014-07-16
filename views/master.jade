@@ -8,15 +8,8 @@ block content
     h3#state.well Disconnected
     .col-lg-2.well
         ul#slavesList
-    .col-lg-5.center-block
-        video.well(id='video' width='640' height='480' autoplay)
-    #controlPanel.col-lg-3.well
-        .row
-            input#width(type='number' placeholder='Ширина видео' max='2048' min='64' value='640' disabled='true')
-            input#height(type='number' placeholder='Высота видео' max='2048' min='64' value='480' disabled='true')
-            input#apply(type='button' value='Apply' disabled='true')
+    .col-lg-3
+        include  videoControl.jade
 
-    script(type='text/javascript' src='vendor/bower_components/peerjs/peer.js')
-    script(type='text/javascript' src='vendor/bower_components/jquery/dist/jquery.js')
     script(type='text/javascript' src='javascripts/Media.js')
     script(type='text/javascript' src='javascripts/RTCMaster.js')
