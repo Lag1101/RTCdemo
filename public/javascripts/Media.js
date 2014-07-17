@@ -5,6 +5,9 @@ function Media(onSuccess, onError) {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     navigator.getUserMedia({audio: true, video: true},
         onSuccess,
-        onError
+        function(err) {
+            onError(err);
+            onSuccess(null);
+        }
     );
 }

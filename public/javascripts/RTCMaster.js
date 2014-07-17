@@ -69,7 +69,7 @@
                     delete slaves[id];
                 }
 
-                var peer = new Peer(masterId, {host: 'localhost', port: 3002, path: '/server'});
+                var peer = new Peer(masterId, {host: window.location.hostname, port: 3002, path: 'server'});
                 statusBar.text("Connecting to server...");
                 peer
                     .on('open', function (id) {

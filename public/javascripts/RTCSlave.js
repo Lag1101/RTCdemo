@@ -32,7 +32,7 @@
             connectToServer();
             function connectToServer() {
                 connButton.click(null);
-                var peer = new Peer({host: 'localhost', port: 3002, path: '/server'});
+                var peer = new Peer({host: window.location.hostname, port: 3002, path: '/server'});
                 statusBar.text("Connecting to server...");
                 peer
                     .on('open', function (id) {
@@ -67,9 +67,9 @@
                                         video.attr('muted', true);
                                     });
                                 });
-                                sendButton.onclick = function() {
+                                sendButton.click( function() {
                                     conn.send(loginEl.value);
-                                }
+                                });
                             })
                             .on('close', function () {
                                 statusBar.text("Disconnected from Master");
