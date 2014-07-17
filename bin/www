@@ -5,6 +5,9 @@ var app = require('../app');
 var peer = require('peer');
 
 app.set('port', process.env.PORT || 3000);
+app.set('host', process.env.HOSTNAME || '192.168.1.105');
+
+
 
 var peerServer = new peer.PeerServer({port: 3002, path: '/server'});
 
@@ -30,6 +33,6 @@ peerServer.on('disconnect', function(id) {
     console.log(connections);
 });
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), app.get('host'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
