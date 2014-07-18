@@ -61,13 +61,13 @@
                                         statusBar.text("Call established");
                                         console.log('call done');
 
-                                        video.attr('src', URL.createObjectURL(stream));
+                                        video.attr('src', window.URL.createObjectURL(stream));
                                         video.attr('muted', true);
                                     });
                                 });
-                                sendButton.onclick = function() {
-                                    conn.send(loginEl.value);
-                                }
+                                sendButton.click( function() {
+                                    conn.send(loginEl.val());
+                                });
                             })
                             .on('close', function () {
                                 statusBar.text("Disconnected from Master");

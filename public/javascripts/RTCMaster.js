@@ -107,7 +107,7 @@
 
                         call.on('stream', function(stream){
                             statusBar.text((slaves[call.peer].name || call.peer) + " gives stream");
-                            addStreamToSlave( call.peer, URL.createObjectURL(stream) );
+                            addStreamToSlave( call.peer, window.URL.createObjectURL(stream) );
                         })
                     });
             }
