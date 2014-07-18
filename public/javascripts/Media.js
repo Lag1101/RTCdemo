@@ -12,7 +12,6 @@ function Media(onSuccess, onError) {
         onSuccess,
         function(err) {
             onError(err);
-            onSuccess(null);
         }
     );
 }
